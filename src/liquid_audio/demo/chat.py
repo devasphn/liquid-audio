@@ -133,7 +133,7 @@ with gr.Blocks() as demo:
             chat_response,  # type: ignore[arg-type]
             input_sample_rate=24_000,
             output_sample_rate=24_000,
-            can_interrupt=False,
+            can_interrupt=True,
         ),
         inputs=[webrtc, chat_state],
         outputs=[webrtc],
