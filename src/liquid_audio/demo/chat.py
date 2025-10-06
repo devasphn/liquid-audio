@@ -102,6 +102,15 @@ def clear():
     gr.Info("Cleared chat history", duration=3)
     return ChatState(proc), None
 
+# ---- WebRTC configuration with explicit public STUN servers ----
+rtc_configuration = {
+    "iceServers": [
+        {"urls": "stun:stun.l.google.com:19302"},
+        {"urls": "stun:global.stun.twilio.com:3478"}
+        # For reliability, add TURN here if available
+        # {"urls": "turn:your.turnserver.com", "username": "user", "credential": "pass"}
+    ]
+}
 
 with gr.Blocks() as demo:
     gr.Markdown("# LFM2-Audio speech-to-speech chat")
@@ -110,7 +119,7 @@ with gr.Blocks() as demo:
     webrtc = WebRTC(
         modality="audio",
         mode="send-receive",
-        # variant="textbox",
+        rtc_configuration=rtc_configuration,  # << NEW: Explicit config for cloud networking
         full_screen=False,
     )
     text_out = gr.Textbox(
